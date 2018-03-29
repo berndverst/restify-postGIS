@@ -4,7 +4,7 @@ var restify = require('restify'),
     db      = require('./bin/db.js');
 var app     = restify.createServer();
 
-db.initDB('keepAlive');
+//db.initDB('keepAlive');
 
 app.use(restify.queryParser())
 app.use(restify.CORS())
@@ -29,5 +29,5 @@ app.get('/', function (req, res, next)
 app.get(/\/(css|js|img)\/?.*/, restify.serveStatic({directory: __dirname+'/static'}));
 
 app.listen(config.get('PORT'), config.get('IP'), function () {
-  console.log( "Listening on " + config.get('IP') + ", port " + config.get('PORT') )
+  console.log( "Web Server listening on " + config.get('IP') + ", port " + config.get('PORT') )
 });
