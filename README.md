@@ -42,7 +42,8 @@ A basic instant mapping demo using PostGIS, node-restify, LeafLet Maps and map t
 
 ```bash
 DB_SERVER=devtour2018
-DB_USER="bernd@$DB_SERVER"
+DB_ADMIN_USER=bernd
+DB_USER="$DB_ADMIN_USER@$DB_SERVER"
 DB_PORT=5432
 read -s DB_PASSWD
 
@@ -60,6 +61,17 @@ docker run -it -e DBUSER=$DB_USER -e DBPASS=$DB_PASSWD \
 ```
 
 The app will be available at http://localhost:8080.
+
+### Optional: Deploy to Azure Container Instances
+
+```bash
+az container create --resource-group containergroupeast --name $DB_SERVER \
+--image berndverst/node-postgis-azure --port 80 --dns-name-label $DB_SERVER \
+--environment-variables DBUSER=$DB_USER DBPASS=$DB_PASSWD DBPORT=$DB_PORT \
+DBSERVER="$DB_SERVER.database.windows.net" PORT=80
+```
+
+The app will be available at `http://$DB_SERVER.eastus.azurecontainer.io/`.
 
 ## License
 This code is dedicated to the public domain to the maximum extent permitted by applicable law, pursuant to CC0 (http://creativecommons.org/publicdomain/zero/1.0/)
